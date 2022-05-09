@@ -8,7 +8,9 @@ const LanguageBar = (props) => {
   const [Input, setInput] = useState("");
   const { t } = useTranslation();
   return (
-    <div style={{ width: "fit-content", display: "inline" }}>
+    <div
+      style={{ width: "100%", display: "inline-flex", justifyContent: "right" }}
+    >
       <TextField
         id="outlined-basic"
         label={t("SEKValue")}
@@ -16,7 +18,12 @@ const LanguageBar = (props) => {
         variant="standard"
         onChange={(e) => setInput(e.target.value)}
       />
-      <Button onClick={() => setConvertValue({ Value: Input })}>
+      <Button
+        sx={{ marginLeft: "10px" }}
+        variant="outlined"
+        size="small"
+        onClick={() => setConvertValue({ Value: Input })}
+      >
         {t("Convert")}
       </Button>
     </div>

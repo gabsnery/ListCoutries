@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.css";
 import Countries from "./Components/Countries";
 import LanguageBar from "./Components/LanguageBar";
-import ConvertionBar from "./Components/ConvertionBar/_index";
+import ConvertionBar from "./Components/ConvertionBar";
 import "./i18n";
 import DataProvider from "./Context/DataContext";
 

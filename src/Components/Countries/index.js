@@ -4,25 +4,38 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
+  TableSortLabel
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useData } from "../../Context/DataContext";
 
-const Countries = (props) => {
+const Countries = () => {
   const { t } = useTranslation();
-  const { SEKValue } = props;
+  const { ConvertValue } = useData();
   const [Contries, setContries] = useState([]);
-  const [ShowCalculatedValue, setShowCalculatedValue] = useState(
-    SEKValue && SEKValue > 0
-  );
+  const [Order, setOrder] = useState({ field: "country", order: "asc" });
   useEffect(() => {
-    setShowCalculatedValue(SEKValue && SEKValue > 0);
+    if (Order.order === "asc") {
+      let temp = Contries.sort((a, b) =>
+        a[Order.field] < b[Order.field] ? -1 : 1
+      );
+      setContries([...temp]);
+    } else {
+      let temp = Contries.sort((a, b) =>
+        a[Order.field] > b[Order.field] ? -1 : 1
+      );
+      setContries([...temp]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [Order]);
+  useEffect(() => {
     const fetchData = async () => {
       const calculatedList = Contries.map(async (item) => {
         return {
           ...item,
           convertedValue: await ConvertCurrencyValue(
-            SEKValue,
+            ConvertValue.Value,
             "SEK",
             item.currencyCode
           )
@@ -32,9 +45,9 @@ const Countries = (props) => {
         setContries(values);
       });
     };
-    if (ShowCalculatedValue) fetchData();
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [SEKValue]);
+  }, [ConvertValue]);
   useEffect(() => {
     const fetchData = async () => {
       const _return = await fetch("https://restcountries.com/v3.1/all", {
@@ -44,17 +57,21 @@ const Countries = (props) => {
         .then((data) => data)
         .catch((error) => console.log("error", error));
       setContries(
-        _return.map((item) => ({
-          country: item.name.official,
-          capitol: item.capital ? item.capital[0] : "N/A",
-          currency: item.currencies
-            ? item.currencies[Object.keys(item.currencies)[0]].name
-            : "N/A",
-          currencyCode: item.currencies ? Object.keys(item.currencies) : "N/A",
-          currencySymbol: item.currencies
-            ? item.currencies[Object.keys(item.currencies)[0]].symbol
-            : "N/A"
-        }))
+        _return
+          .map((item) => ({
+            country: item.name.official,
+            capitol: item.capital ? item.capital[0] : "N/A",
+            currency: item.currencies
+              ? item.currencies[Object.keys(item.currencies)[0]].name
+              : "N/A",
+            currencyCode: item.currencies
+              ? Object.keys(item.currencies)
+              : "N/A",
+            currencySymbol: item.currencies
+              ? item.currencies[Object.keys(item.currencies)[0]].symbol
+              : "N/A"
+          }))
+          .sort((a, b) => (a["country"] < b["country"] ? -1 : 1))
       );
     };
     fetchData();
@@ -64,10 +81,25 @@ const Countries = (props) => {
     <Table aria-label="collapsible table" size="small">
       <TableHead>
         <TableRow>
-          <TableCell>{t("Country")}</TableCell>
+          <TableCell>
+            {" "}
+            <TableSortLabel
+              onClick={() =>
+                setOrder({
+                  ...Order,
+                  order: Order.order === "asc" ? "desc" : "asc",
+                  field: "country"
+                })
+              }
+              active
+              direction={Order.field === "country" ? Order.order : "desc"}
+            >
+              {t("Country")}{" "}
+            </TableSortLabel>
+          </TableCell>
           <TableCell>{t("Capitol")}</TableCell>
           <TableCell>{t("Currency")}</TableCell>
-          {ShowCalculatedValue ? (
+          {ConvertValue.Value > 0 ? (
             <TableCell>{t("ConvertedValue")}</TableCell>
           ) : null}
         </TableRow>
@@ -78,7 +110,7 @@ const Countries = (props) => {
             <TableCell>{item.country}</TableCell>
             <TableCell>{item.capitol}</TableCell>
             <TableCell>{`${item.currency} (${item.currencySymbol})`}</TableCell>
-            {ShowCalculatedValue ? (
+            {ConvertValue.Value > 0 ? (
               <TableCell>{item.convertedValue}</TableCell>
             ) : null}
           </TableRow>
@@ -102,6 +134,6 @@ const ConvertCurrencyValue = async (SEKValue, FromCurrency, ToCurrency) => {
     .then((response) => response.json())
     .then((data) => data)
     .catch((error) => console.log("error", error));
-  return _result["result"] || "N/A";
+  return _result["result"] || SEKValue;
 };
 export default Countries;
