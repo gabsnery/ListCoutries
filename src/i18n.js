@@ -2,6 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import pt from "./lang/pt.json";
 import en from "./lang/en.json";
+import swe from "./lang/swe.json";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -10,6 +11,9 @@ i18n.use(initReactI18next).init({
     },
     en: {
       translation: en
+    },
+    swe: {
+      translation: swe
     }
   },
   fallbackLng: "en",
