@@ -1,8 +1,9 @@
 {
   "Country": "Country",
-  "Capitol": "Capitol",
+  "Capital": "Capital",
   "Currency": "Currency",
   "ConvertedValue": "Converted value",
   "SEKValue": "SEK Value",
-  "Convert": "Convert"
+  "Convert": "Convert",
+  "Population": "Population"
 }

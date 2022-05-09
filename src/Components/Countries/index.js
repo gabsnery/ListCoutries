@@ -60,7 +60,8 @@ const Countries = () => {
         _return
           .map((item) => ({
             country: item.name.official,
-            capitol: item.capital ? item.capital[0] : "N/A",
+            capital: item.capital ? item.capital[0] : "N/A",
+            population: item.population,
             currency: item.currencies
               ? item.currencies[Object.keys(item.currencies)[0]].name
               : "N/A",
@@ -97,7 +98,8 @@ const Countries = () => {
               {t("Country")}{" "}
             </TableSortLabel>
           </TableCell>
-          <TableCell>{t("Capitol")}</TableCell>
+          <TableCell>{t("Capital")}</TableCell>
+          <TableCell>{t("Population")}</TableCell>
           <TableCell>{t("Currency")}</TableCell>
           {ConvertValue.Value > 0 ? (
             <TableCell>{t("ConvertedValue")}</TableCell>
@@ -108,7 +110,8 @@ const Countries = () => {
         {Contries.map((item, idx) => (
           <TableRow key={idx}>
             <TableCell>{item.country}</TableCell>
-            <TableCell>{item.capitol}</TableCell>
+            <TableCell>{item.capital}</TableCell>
+            <TableCell>{item.population}</TableCell>
             <TableCell>{`${item.currency} (${item.currencySymbol})`}</TableCell>
             {ConvertValue.Value > 0 ? (
               <TableCell>{item.convertedValue}</TableCell>

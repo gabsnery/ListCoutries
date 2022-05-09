@@ -8,6 +8,7 @@ const LanguageBar = (props) => {
     <div style={{ width: "100%", display: "inline-flex" }}>
       <Button onClick={() => i18n.changeLanguage("pt")}>Português</Button>
       <Button onClick={() => i18n.changeLanguage("en")}>English</Button>
+      <Button onClick={() => i18n.changeLanguage("swe")}>Swedish</Button>
     </div>
   );
 };

@@ -1,8 +1,9 @@
 {
   "Country": "Pais",
-  "Capitol": "Capital",
+  "Capital": "Capital",
   "Currency": "Moeda",
   "ConvertedValue": "Valor convertido",
   "SEKValue": "Valor em SEK",
-  "Convert": "Converter"
+  "Convert": "Converter",
+  "Population": "População"
 }
