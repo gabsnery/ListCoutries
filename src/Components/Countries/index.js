@@ -36,7 +36,7 @@ const Countries = () => {
           ...item,
           convertedValue: await ConvertCurrencyValue(
             ConvertValue.Value,
-            "SEK",
+            ConvertValue.From,
             item.currencyCode
           )
         };
@@ -122,7 +122,7 @@ const Countries = () => {
     </Table>
   );
 };
-const ConvertCurrencyValue = async (SEKValue, FromCurrency, ToCurrency) => {
+const ConvertCurrencyValue = async (Value, FromCurrency, ToCurrency) => {
   var myHeaders = new Headers();
   myHeaders.append("apikey", "dOzX0aRyYMwShVPf2ZW3Fois9tO2jKOe");
   var requestOptions = {
@@ -131,12 +131,12 @@ const ConvertCurrencyValue = async (SEKValue, FromCurrency, ToCurrency) => {
     headers: myHeaders
   };
   const _result = await fetch(
-    `https://api.apilayer.com/fixer/convert?to=${ToCurrency}&from=${FromCurrency}&amount=${SEKValue}`,
+    `https://api.apilayer.com/fixer/convert?to=${ToCurrency}&from=${FromCurrency}&amount=${Value}`,
     requestOptions
   )
     .then((response) => response.json())
     .then((data) => data)
     .catch((error) => console.log("error", error));
-  return _result["result"] || SEKValue;
+  return _result["result"] || Value;
 };
 export default Countries;
