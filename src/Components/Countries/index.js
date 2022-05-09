@@ -137,6 +137,6 @@ const ConvertCurrencyValue = async (Value, FromCurrency, ToCurrency) => {
     .then((response) => response.json())
     .then((data) => data)
     .catch((error) => console.log("error", error));
-  return _result["result"] || Value;
+  return _result["result"] || "N/A";
 };
 export default Countries;
