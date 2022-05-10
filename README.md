@@ -5,6 +5,7 @@
 - Allow sort by capital
 - Allow other different convertions by selecting "From" insted of only converting from SEK
 - Saving countries list on browser storage insted of requesting to API all the time
+- Improve feedbak on error
 
 ## Installation and Setup Instructions
 Clone down this repository. You will need node and npm installed globally on your machine.
