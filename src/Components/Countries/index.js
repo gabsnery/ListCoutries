@@ -137,6 +137,8 @@ const ConvertCurrencyValue = async (Value, FromCurrency, ToCurrency) => {
   return _result
     ? _result.hasOwnProperty("conversion_result")
       ? _result["conversion_result"]
+      : _result.hasOwnProperty("error-type")
+      ? _result["error-type"]
       : "N/A"
     : "N/A";
 };
