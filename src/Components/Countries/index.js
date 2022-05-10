@@ -37,7 +37,7 @@ const Countries = () => {
           convertedValue: await ConvertCurrencyValue(
             ConvertValue.Value,
             ConvertValue.From,
-            item.currencyCode
+            item.currencyCode[0]
           )
         };
       });
@@ -45,7 +45,7 @@ const Countries = () => {
         setContries(values);
       });
     };
-    fetchData();
+    if (ConvertValue.Value > 0) fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ConvertValue]);
   useEffect(() => {
@@ -123,20 +123,21 @@ const Countries = () => {
   );
 };
 const ConvertCurrencyValue = async (Value, FromCurrency, ToCurrency) => {
-  var myHeaders = new Headers();
-  myHeaders.append("apikey", "dOzX0aRyYMwShVPf2ZW3Fois9tO2jKOe");
+  const apiKey = "08b7b782275900ddc58db097";
   var requestOptions = {
-    method: "GET",
-    redirect: "follow",
-    headers: myHeaders
+    method: "GET"
   };
   const _result = await fetch(
-    `https://api.apilayer.com/fixer/convert?to=${ToCurrency}&from=${FromCurrency}&amount=${Value}`,
+    `https://v6.exchangerate-api.com/v6/${apiKey}/pair/${FromCurrency}/${ToCurrency}/${Value}`,
     requestOptions
   )
     .then((response) => response.json())
     .then((data) => data)
     .catch((error) => console.log("error", error));
-  return _result["result"] || "N/A";
+  return _result
+    ? _result.hasOwnProperty("conversion_result")
+      ? _result["conversion_result"]
+      : "N/A"
+    : "N/A";
 };
 export default Countries;
