@@ -1,4 +1,5 @@
 ## What you would have done given more time
+
 - Add unit tests
 - Styling table to look better, more colorful and responsive.
 - Allow search by capital, country and currency.
@@ -8,6 +9,7 @@
 - Improve feedbak on error
 
 ## Installation and Setup Instructions
+
 Clone down this repository. You will need node and npm installed globally on your machine.
 
 Installation:
