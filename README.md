@@ -7,6 +7,7 @@
 - Allow other different convertions by selecting "From" insted of only converting from SEK
 - Saving countries list on browser storage insted of requesting to API all the time
 - Improve feedbak on error
+- Loading feedback
 
 ## Installation and Setup Instructions
 
